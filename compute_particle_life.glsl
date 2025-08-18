@@ -44,7 +44,7 @@ layout(push_constant, std430) uniform Params {
     float run_mode;  // 0 = sim, 1 = draw
 } params;
 
-// color generator per species // TODO consider passing in colors as push constant parameter
+// Color generator per species // TODO: consider passing in colors as push constant parameter
 vec3 species_color_custom(int species) {
     if (species == 0) return vec3(1.0, 0.0, 0.0); // Red
     if (species == 1) return vec3(0.0, 1.0, 0.0); // Green
@@ -104,7 +104,8 @@ void draw_circle(vec2 center, float radius, vec4 color) {
     }
 }
 
-float applyForce(float f, float dist, float softening, float max_force) {
+// Apply a softened and capped force
+float apply_force(float f, float dist, float softening, float max_force) {
     float softened_dist = sqrt(dist * dist + softening * softening);
     float force_mag = f / softened_dist;
 	
@@ -112,7 +113,7 @@ float applyForce(float f, float dist, float softening, float max_force) {
 }
 
 // Simple 2D hash to make a pseudo-random direction from particle IDs
-vec2 pseudoRandomDir(uint a, uint b) {
+vec2 random_dir(uint a, uint b) {
     uint seed = a * 1664525u + b * 1013904223u; // LCG mix
     float ang = float(seed % 6283u) * 0.001f;   // ~0 to ~2pi
     return vec2(cos(ang), sin(ang));
@@ -194,7 +195,7 @@ void run_sim() {
 			// Particle attraction/repulsion (with softening + clamp)
             if (dist < params.interaction_radius) {
                 float f = interaction_matrix.data[species * uint(params.species_count) + other_species];
-                force += dir * applyForce(f, dist, params.force_softening, params.max_force);
+                force += dir * apply_force(f, dist, params.force_softening, params.max_force);
             }
 
             // Particle collision (with softening + clamp)
@@ -202,14 +203,14 @@ void run_sim() {
             if (dist < min_dist) {
                 float penetration = min_dist - dist;
                 float f = penetration * params.collision_strength;
-                force -= dir * applyForce(f, dist, params.force_softening, params.max_force); // inverted sign
+                force -= dir * apply_force(f, dist, params.force_softening, params.max_force); // inverted sign
             }
 		} else {
 			// in the exact same spot, so push apart in a random direction
-			vec2 dir = pseudoRandomDir(id, i);
+			vec2 dir = random_dir(id, i);
 			float f = params.collision_strength * params.collision_radius; // tiny force
 			//force -= dir * f;
-			force -= dir * applyForce(f, 0.001, params.force_softening, params.max_force);
+			force -= dir * apply_force(f, 0.001, params.force_softening, params.max_force);
 		}
     }
 	

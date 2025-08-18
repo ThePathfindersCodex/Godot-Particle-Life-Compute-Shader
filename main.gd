@@ -43,28 +43,27 @@ func _ready():
 	%OptionStartPointCount.selected = 3
 
 func _process(_delta):
-	# SET READOUT TEXT
-	%LabelReadoutValues.text = "\n" + \
-	str(snapped(%ComputeParticleLife.point_count,1))+"\n"+ \
-	str(snapped(%ComputeParticleLife.species_count,1))+"\n"+ \
-	str(snapped(%ComputeParticleLife.dt,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.damping,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.interaction_radius,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.force_softening_mul,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.force_softening,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.max_velocity_mul,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.max_velocity,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.draw_radius,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.collision_modifier,.1))+"\n"+ \
-	str(snapped(%ComputeParticleLife.collision_radius,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.collision_strength,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.border_style,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.border_size_scale,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.center_attraction,.01))+"\n"+ \
-	str(snapped(%ComputeParticleLife.max_force,.01))+"\n"+ \
-	"("+str(snapped(%ComputeParticleLife.camera_center.x,.1))+ ", " + str(snapped(%ComputeParticleLife.camera_center.y,.1)) + ")"+"\n"+ \
-	str(snapped(%ComputeParticleLife.zoom,.01))+"\n"
-
+	# SET READOUT VALUES
+	%LabelPointsValue.text = str(snapped(%ComputeParticleLife.point_count,1))
+	%LabelSpeciesValue.text = str(snapped(%ComputeParticleLife.species_count,1))
+	%LabelSpeedValue.text = str(snapped(%ComputeParticleLife.dt,.01))
+	%LabelDampingValue.text = str(snapped(%ComputeParticleLife.damping,.01))
+	%LabelSenseRadiusValue.text = str(snapped(%ComputeParticleLife.interaction_radius,.01))
+	%LabelForceSoftenMultiplierValue.text = str(snapped(%ComputeParticleLife.force_softening_mul,.01))
+	%LabelForceSoftenValue.text = str(snapped(%ComputeParticleLife.force_softening,.01))
+	%LabelMaxVelocityMultiplierValue.text = str(snapped(%ComputeParticleLife.max_velocity_mul,.01))
+	%LabelMaxVelocityValue.text = str(snapped(%ComputeParticleLife.max_velocity,.01))
+	%LabelDrawSizeValue.text = str(snapped(%ComputeParticleLife.draw_radius,.01))
+	%LabelCollideModifierValue.text = str(snapped(%ComputeParticleLife.collision_modifier,.1))
+	%LabelCollideRadiusValue.text = str(snapped(%ComputeParticleLife.collision_radius,.01))
+	%LabelCollideStrValue.text = str(snapped(%ComputeParticleLife.collision_strength,.01))
+	%LabelBorderStyleValue.text = str(snapped(%ComputeParticleLife.border_style,.01))
+	%LabelBorderScaleValue.text = str(snapped(%ComputeParticleLife.border_size_scale,.01))
+	%LabelCenterPullValue.text = str(snapped(%ComputeParticleLife.center_attraction,.01))
+	%LabelMaxForceValue.text = str(snapped(%ComputeParticleLife.max_force,.01))
+	%LabelCamCenterValue.text = "("+str(snapped(%ComputeParticleLife.camera_center.x,.1))+ ", " + str(snapped(%ComputeParticleLife.camera_center.y,.1)) + ")"
+	%LabelZoomValue.text = str(snapped(%ComputeParticleLife.zoom,.01))
+	
 	# SET INTERACTION MATRIX TEXT
 	var species_count = %ComputeParticleLife.species_count
 	var interaction_matrix = %ComputeParticleLife.interaction_matrix

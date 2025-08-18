@@ -24,6 +24,7 @@ expand_margin_bottom = 5.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
+metadata/_edit_vertical_guides_ = [60.0]
 
 [node name="ComputeParticleLife" type="TextureRect" parent="."]
 unique_name_in_owner = true
@@ -171,71 +172,59 @@ popup/item_3/id = 3
 popup/item_4/text = "25600"
 popup/item_4/id = 4
 
-[node name="LabelReadoutLabels" type="Label" parent="."]
+[node name="SimParameters" type="GridContainer" parent="."]
 offset_left = 836.0
 offset_top = 96.0
-offset_right = 1006.0
-offset_bottom = 1002.0
-text = "
-POINTS
-SPECIES
-SPEED
-DAMPING
-INTERACT RADIUS
-FORCE SOFTEN MUL
-FORCE SOFTEN
-MAX VELOC MUL
-MAX VELOC
-DRAW SIZE
-COLLIDE MOD
-COLLIDE RADIUS
-COLLIDE STR
-BORDER STYLE
-BORDER SCALE
-CENTER PULL
-MAX FORCE
-CAM CENTER
-ZOOM"
-horizontal_alignment = 2
+offset_right = 1344.0
+offset_bottom = 628.0
+columns = 3
 
-[node name="LabelReadoutValues" type="Label" parent="."]
-unique_name_in_owner = true
-offset_left = 977.0
-offset_top = 96.0
-offset_right = 1147.0
-offset_bottom = 1002.0
-text = "
-0
-10
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-0
-(0,0)
-0"
-horizontal_alignment = 2
-
-[node name="SimParameters" type="VBoxContainer" parent="."]
-offset_left = 1161.0
-offset_top = 90.0
-offset_right = 1319.0
-offset_bottom = 561.0
-
-[node name="HSeparator" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
-custom_minimum_size = Vector2(0, 80.745)
+[node name="LabelPoints" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "POINTS"
+horizontal_alignment = 2
+
+[node name="LabelPointsValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ControlSpacer" type="Control" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelSpecies" type="Label" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SPECIES"
+horizontal_alignment = 2
+
+[node name="LabelSpeciesValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ControlSpacer2" type="Control" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelSpeed" type="Label" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SPEED"
+horizontal_alignment = 2
+
+[node name="LabelSpeedValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderSpeed" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -244,9 +233,18 @@ max_value = 0.5
 step = 0.01
 value = 0.25
 
-[node name="HSeparator6" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
+[node name="LabelDamping" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "DAMPING"
+horizontal_alignment = 2
+
+[node name="LabelDampingValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderDampen" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -256,9 +254,18 @@ max_value = 1.0
 step = 0.01
 value = 0.95
 
-[node name="HSeparator2" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
+[node name="LabelSenseRadius" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "INTERACT RADIUS"
+horizontal_alignment = 2
+
+[node name="LabelSenseRadiusValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderSenseRadius" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -268,9 +275,18 @@ max_value = 500.0
 step = 10.0
 value = 70.0
 
-[node name="HSeparator10" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
+[node name="LabelForceSoftenMultiplier" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "FORCE SOFTEN MUL"
+horizontal_alignment = 2
+
+[node name="LabelForceSoftenMultiplierValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderForceSoftenMultiplier" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -280,10 +296,35 @@ max_value = 1.0
 step = 0.005
 value = 0.05
 
-[node name="HSeparator11" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
-custom_minimum_size = Vector2(0, 27.175)
+[node name="LabelForceSoften" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "FORCE SOFTEN"
+horizontal_alignment = 2
+
+[node name="LabelForceSoftenValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ControlSpacer3" type="Control" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelMaxVelocityMultiplier" type="Label" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "MAX VELOC MUL"
+horizontal_alignment = 2
+
+[node name="LabelMaxVelocityMultiplierValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderMaxVelocityMultiplier" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -293,10 +334,35 @@ max_value = 5.0
 step = 0.01
 value = 0.25
 
-[node name="HSeparator5" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
-custom_minimum_size = Vector2(0, 24.405)
+[node name="LabelMaxVelocity" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "MAX VELOC"
+horizontal_alignment = 2
+
+[node name="LabelMaxVelocityValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ControlSpacer4" type="Control" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelDrawSize" type="Label" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "DRAW SIZE"
+horizontal_alignment = 2
+
+[node name="LabelDrawSizeValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderDrawSize" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -305,9 +371,18 @@ min_value = 1.0
 max_value = 4.0
 value = 2.0
 
-[node name="HSeparator9" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
+[node name="LabelCollideModifier" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "COLLIDE MOD"
+horizontal_alignment = 2
+
+[node name="LabelCollideModifierValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderCollideModifier" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -316,10 +391,35 @@ max_value = 2.0
 step = 0.5
 value = 0.5
 
-[node name="HSeparator4" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
-custom_minimum_size = Vector2(0, 24.62)
+[node name="LabelCollideRadius" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "COLLIDE RADIUS"
+horizontal_alignment = 2
+
+[node name="LabelCollideRadiusValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ControlSpacer5" type="Control" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelCollideStr" type="Label" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "COLLIDE STR"
+horizontal_alignment = 2
+
+[node name="LabelCollideStrValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderCollideStr" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -328,18 +428,36 @@ max_value = 30.0
 step = 0.5
 value = 2.0
 
-[node name="HSeparator8" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
+[node name="LabelBorderStyle" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "BORDER STYLE"
+horizontal_alignment = 2
+
+[node name="LabelBorderStyleValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderBorderStyle" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 4.0
 
-[node name="HSeparator12" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
+[node name="LabelBorderScale" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "BORDER SCALE"
+horizontal_alignment = 2
+
+[node name="LabelBorderScaleValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderBorderScale" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -349,9 +467,18 @@ max_value = 8.0
 step = 0.05
 value = 1.0
 
-[node name="HSeparator3" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
+[node name="LabelCenterPull" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "CENTER PULL"
+horizontal_alignment = 2
+
+[node name="LabelCenterPullValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderCenterPull" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -360,9 +487,18 @@ max_value = 0.5
 step = 0.01
 value = 0.01
 
-[node name="HSeparator7" type="HSeparator" parent="SimParameters"]
-self_modulate = Color(0, 0, 0, 0)
+[node name="LabelMaxForce" type="Label" parent="SimParameters"]
 layout_mode = 2
+size_flags_horizontal = 3
+text = "MAX FORCE"
+horizontal_alignment = 2
+
+[node name="LabelMaxForceValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
 
 [node name="SliderMaxForce" type="HSlider" parent="SimParameters"]
 unique_name_in_owner = true
@@ -371,12 +507,46 @@ max_value = 10000.0
 step = 0.1
 value = 5.0
 
+[node name="LabelCamCenter" type="Label" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CAM CENTER"
+horizontal_alignment = 2
+
+[node name="LabelCamCenterValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ControlSpacer6" type="Control" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelZoom" type="Label" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ZOOM"
+horizontal_alignment = 2
+
+[node name="LabelZoomValue" type="Label" parent="SimParameters"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="ControlSpacer7" type="Control" parent="SimParameters"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="LabelIntMatrix" type="Label" parent="."]
 unique_name_in_owner = true
-offset_left = 866.0
-offset_top = 653.0
-offset_right = 1187.0
-offset_bottom = 1020.0
+offset_left = 879.0
+offset_top = 655.0
+offset_right = 1200.0
+offset_bottom = 1022.0
 theme_override_font_sizes/font_size = 12
 text = "INTERACTION MATRIX
 
