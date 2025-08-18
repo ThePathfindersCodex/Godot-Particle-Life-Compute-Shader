@@ -92,111 +92,21 @@ func restart_simulation():
 	# Create playfield
 	var start_data : Dictionary = {}
 	match starting_method:
-		0: start_data = build_particles(pos_random, false)
-		1: start_data = build_particles(pos_ring, true)
+		0: start_data = StartupManager.build_particles(self, StartupManager.pos_random, false)
+		1: start_data = StartupManager.build_particles(self, StartupManager.pos_ring, true)
 		2: 
-			setup_spiral_params()
-			start_data = build_particles(pos_spiral, false)
+			StartupManager.setup_spiral_params(self)
+			start_data = StartupManager.build_particles(self, StartupManager.pos_spiral, false)
 		3: 
-			setup_spiral_params()
-			start_data = build_particles(pos_spiral, true)
-		4: start_data = build_particles(pos_columns, false)
-		5: start_data = build_particles(pos_columns, true)
-		_: start_data = build_particles(pos_random, false)
+			StartupManager.setup_spiral_params(self)
+			start_data = StartupManager.build_particles(self, StartupManager.pos_spiral, true)
+		4: start_data = StartupManager.build_particles(self, StartupManager.pos_columns, false)
+		5: start_data = StartupManager.build_particles(self, StartupManager.pos_columns, true)
+		_: start_data = StartupManager.build_particles(self, StartupManager.pos_random, false)
 	rebuild_buffers(start_data)
 
 	# Unlock Checkbox
 	%CheckBoxLockMatrix.disabled = false 
-
-func build_particles(pos_func: Callable, use_symmetric_matrix: bool) -> Dictionary:
-	var pos := PackedVector2Array()
-	var vel := PackedVector2Array()
-	var species := PackedInt32Array()
-	
-	for i in range(point_count):
-		var s = i % species_count
-		pos.append(pos_func.call(i, s))
-		vel.append(Vector2.ZERO)
-		species.append(s)
-
-	if (%CheckBoxLockMatrix.disabled || !%CheckBoxLockMatrix.button_pressed):
-		if use_symmetric_matrix:
-			interaction_matrix = generate_matrix_symmetric(species_count, rand_start_interaction_range)
-		else:
-			interaction_matrix = generate_matrix_random(species_count, rand_start_interaction_range)
-	
-	return {
-		"pos": pos,
-		"vel": vel,
-		"species": species,
-		"interaction_matrix": interaction_matrix
-	}
-
-
-func generate_matrix_random(count: int, force_range: float) -> PackedFloat32Array:
-	var matrix := PackedFloat32Array()
-	for i in range(count * count):
-		matrix.append(randf_range(-force_range, force_range))
-	return matrix
-
-func generate_matrix_symmetric(count: int, force_range: float) -> PackedFloat32Array:
-	var tmp = []
-	for i in range(count):
-		tmp.append([])
-		for j in range(count):
-			if j < i:
-				tmp[i].append(tmp[j][i])
-			else:
-				tmp[i].append(randf_range(-force_range, force_range))
-	var matrix := PackedFloat32Array()
-	for i in range(count):
-		for j in range(count):
-			matrix.append(tmp[i][j])
-	return matrix
-
-func pos_random(_i:int, _s:int) -> Vector2:
-	var radius = (image_size * rand_start_radius_mul) * 0.5
-	return Vector2(randf_range(-radius, radius), randf_range(-radius, radius))
-
-func pos_ring(i:int, _s:int) -> Vector2:
-	var center = Vector2.ZERO
-	var radius = min(image_size, image_size) * rand_start_radius_mul * 0.5
-	var angle = (TAU / point_count) * i
-	return center + Vector2(cos(angle), sin(angle)) * radius
-
-func pos_spiral(i:int, _s:int) -> Vector2:
-	var arm_index = i % spiral_arms
-	var arm_angle = (TAU / spiral_arms) * arm_index
-	var t = float(i) / point_count
-	var radius = t * spiral_max_radius
-	var angle = spiral_turns * (radius / spiral_max_radius) * TAU + arm_angle + spiral_base_angle
-	angle += randf_range(-spiral_arm_spread, spiral_arm_spread)
-	radius += randf_range(-spiral_arm_spread * spiral_max_radius, spiral_arm_spread * spiral_max_radius)
-	return spiral_center + Vector2(cos(angle), sin(angle)) * radius
-	
-# Spiral parameters if needed
-var spiral_center = Vector2.ZERO
-var spiral_max_radius = 0.0
-var spiral_arms = 4
-var spiral_turns = 3.0
-var spiral_arm_spread = 0.015
-var spiral_base_angle = 0.0
-func setup_spiral_params():
-	spiral_center = Vector2.ZERO
-	spiral_max_radius = min(image_size, image_size) * rand_start_radius_mul * 0.5
-	spiral_arms = 4
-	spiral_turns = 3.0
-	spiral_arm_spread = 0.015
-	spiral_base_angle = randf() * TAU  # only once per restart
-
-func pos_columns(_i:int, s:int) -> Vector2:
-	var band_width = image_size / float(species_count) * rand_start_radius_mul
-	var half_width = (band_width * species_count) * 0.5
-	var x_min = s * band_width
-	var x_max = (s + 1) * band_width
-	var x = randf_range(x_min, x_max) - half_width
-	var y = randf_range(0.0, image_size) - image_size * 0.5
-	return Vector2(x, y)
 
 func rebuild_buffers(data: Dictionary):
 	buffers.clear()

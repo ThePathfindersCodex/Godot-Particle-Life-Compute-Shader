@@ -15,6 +15,10 @@ run/main_scene="uid://bmhtmrovb00k"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+StartupManager="*res://startup_manager.gd"
+
 [display]
 
 window/size/viewport_width=1350
