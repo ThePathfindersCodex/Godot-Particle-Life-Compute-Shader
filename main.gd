@@ -16,27 +16,14 @@ var slider_bindings = {
 }
 
 func _ready():
-	# Connect all sliders
+	# Connect all sliders and set defaults
 	for slider_path in slider_bindings.keys():
 		var slider = get_node(slider_path)
 		var property = slider_bindings[slider_path]
 		slider.value = %ComputeParticleLife.get(property)
 		slider.connect("value_changed", Callable(self, "_on_slider_changed").bind(property))
 	
-	# Control defaults
-	%SliderSpeed.value = %ComputeParticleLife.dt
-	%SliderDampen.value = %ComputeParticleLife.damping
-	%SliderSenseRadius.value = %ComputeParticleLife.interaction_radius
-	%SliderForceSoftenMultiplier.value = %ComputeParticleLife.force_softening_mul
-	%SliderMaxVelocityMultiplier.value = %ComputeParticleLife.max_velocity_mul
-	%SliderDrawSize.value = %ComputeParticleLife.draw_radius
-	%SliderCollideModifier.value = %ComputeParticleLife.collision_modifier
-	%SliderCollideStr.value = %ComputeParticleLife.collision_strength
-	%SliderCenterPull.value = %ComputeParticleLife.center_attraction
-	%SliderMaxForce.value = %ComputeParticleLife.max_force
-	%SliderBorderStyle.value = %ComputeParticleLife.border_style
-	%SliderBorderScale.value = %ComputeParticleLife.border_size_scale
-	
+	# Options default values
 	%OptionStartInteractionRange.selected = int(%ComputeParticleLife.rand_start_interaction_range)
 	%OptionStartRadiusMultiplier.selected =  int(%ComputeParticleLife.rand_start_radius_mul)
 	%OptionStartSpeciesCount.selected = %ComputeParticleLife.start_species_count

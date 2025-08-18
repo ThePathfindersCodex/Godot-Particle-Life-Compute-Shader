@@ -24,7 +24,6 @@ expand_margin_bottom = 5.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
-metadata/_edit_vertical_guides_ = [60.0]
 
 [node name="ComputeParticleLife" type="TextureRect" parent="."]
 unique_name_in_owner = true
@@ -72,7 +71,7 @@ text = "RESTART"
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
-selected = 0
+selected = 2
 item_count = 6
 popup/item_0/text = "Random"
 popup/item_0/id = 0

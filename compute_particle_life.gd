@@ -12,7 +12,7 @@ var rand_start_interaction_range : float = 2.0  # force will be random between -
 var rand_start_radius_mul : float = 2.0 # different startup patterns use this multiplier
 var start_point_count : int = point_count # only used when restarting new field
 var start_species_count : int = species_count # only used when restarting new field
-var starting_method : int = 0 # which method to use when restarting new field?
+var starting_method : int = 2 # which method to use when restarting new field?
 
 # SPEED/TIME
 var dt : float = .25
@@ -458,7 +458,7 @@ func _process(_delta):
 # HANDLE MOUSE INPUTS
 var dragging := false
 var last_mouse_pos := Vector2()
-func _input(event):
+func _gui_input(event):
 	if event is InputEventMouseButton:
 		# Handle zoom
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
