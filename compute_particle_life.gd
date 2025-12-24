@@ -2,8 +2,12 @@ extends TextureRect
 
 # CONFIG
 var shader_local_size := 512
-#var image_size : int = 800
-@onready var image_size : int = %ComputeParticleLife.size.x
+var empty_img : Image
+@onready var image_size : int = %ComputeParticleLife.size.x:
+	set(v):
+		empty_img = Image.create(v, v, false, Image.FORMAT_RGBAF)
+		empty_img.fill(Color(0.1, 0.1, 0.1, 1.0))
+		image_size = v
 var point_count : int = 1024*15
 var species_count : int = 8
 
@@ -74,6 +78,8 @@ var output_tex_uniform : RDUniform
 
 func _ready():
 	randomize()
+	image_size = %ComputeParticleLife.size.x
+	
 	fmt.width = image_size
 	fmt.height = image_size
 	fmt.format = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
@@ -212,8 +218,16 @@ func _process(_delta):
 
 func run_simulation():
 	### RUN ALL COMPUTE STAGES
-	for run_mode in [0, 1, 2]:  # 0 = simulate, 1 = clear, 2 = draw
-		compute_stage(run_mode)
+	#for run_mode in [0, 1, 2]:  # 0 = simulate, 1 = clear, 2 = draw
+		#compute_stage(run_mode)
+		
+	compute_stage(0)
+	
+	#compute_stage(1)
+	rdmain.texture_update(output_tex, 0, empty_img.get_data())
+	
+	compute_stage(2)
+		
 
 	### RESOLVE RESULTS — copy GPU output back into input buffers
 	var output_bytes_pos = rdmain.buffer_get_data(buffers[3])  # out_pos_buffer
