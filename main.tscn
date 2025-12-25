@@ -1,17 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmhtmrovb00k"]
+[gd_scene load_steps=6 format=3 uid="uid://bmhtmrovb00k"]
 
 [ext_resource type="Script" uid="uid://k8pbpe4sxcej" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://bmg4hq0c4w262" path="res://compute_particle_life.gd" id="3_h2yge"]
-[ext_resource type="Shader" uid="uid://c1lfq8yyn4lrk" path="res://glow.gdshader" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://b0p56dqg28way" path="res://LabelFPS.gd" id="4_1bvp3"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7mycd"]
-shader = ExtResource("3_lquwl")
-shader_parameter/BLOOM_THRESHOLD = 0.9
-shader_parameter/BLOOM_INTENSITY = 3.0
-shader_parameter/BLUR_ITERATIONS = 4
-shader_parameter/BLUR_SIZE = 0.05
-shader_parameter/BLUR_SUBDIVISIONS = 64
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1bvp3"]
 
@@ -27,7 +18,6 @@ script = ExtResource("1_ig7tw")
 
 [node name="ComputeParticleLife" type="TextureRect" parent="."]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_7mycd")
 offset_left = 42.0
 offset_top = 94.0
 offset_right = 842.0
