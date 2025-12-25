@@ -172,10 +172,10 @@ func compute_stage(run_mode:int):
 	var global_size_x : int = int(float(point_count) / shader_local_size) + 1
 	var global_size_y : int = 1
 	
-	# but use 2 dimensions for image size during CLEAR stage 
-	if (run_mode == 1) :
-		global_size_x = image_size
-		global_size_y = image_size
+	## but use 2 dimensions for image size during CLEAR stage 
+	#if (run_mode == 1) :
+		#global_size_x = image_size
+		#global_size_y = image_size
 	
 	var compute_list := rdmain.compute_list_begin()
 	rdmain.compute_list_bind_compute_pipeline(compute_list, pipeline)
@@ -227,16 +227,59 @@ func run_simulation():
 	rdmain.texture_update(output_tex, 0, empty_img.get_data())
 	
 	compute_stage(2)
-		
-
-	### RESOLVE RESULTS — copy GPU output back into input buffers
-	var output_bytes_pos = rdmain.buffer_get_data(buffers[3])  # out_pos_buffer
-	var output_bytes_vel = rdmain.buffer_get_data(buffers[4])  # out_vel_buffer
-	rdmain.buffer_update(buffers[0], 0, output_bytes_pos.size(), output_bytes_pos)  # in_pos_buffer
-	rdmain.buffer_update(buffers[1], 0, output_bytes_vel.size(), output_bytes_vel)  # in_vel_buffer
-
+	
+	### RESOLVE RESULTS — swap the output to be the input for next frame
+	swap_buffer_bindings()
+	
 	# UPDATE TEXTURE ON SCREEN
 	texture = textureRD
+
+# FRAME BUFFER SWAP LOGIC
+var swap_flag : int = 0
+func swap_buffer_bindings():
+	if (dt == 0):
+		return
+	
+	swap_flag = 1 - swap_flag  # toggle between 0 and 1
+
+	var pos_in_index = 0
+	var vel_in_index = 0
+	var pos_out_index = 0
+	var vel_out_index = 0
+	if swap_flag == 0:
+		# Use first set as input, second set as output
+		pos_in_index = 0
+		vel_in_index = 1
+		pos_out_index = 3
+		vel_out_index = 4
+	else:
+		# Use second set as input, first set as output
+		pos_in_index = 3
+		vel_in_index = 4
+		pos_out_index = 0
+		vel_out_index = 1
+	
+	# rebuild uniforms for bindings 0 and 1
+	uniforms[0] = RDUniform.new()
+	uniforms[0].uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	uniforms[0].binding = 0
+	uniforms[0].add_id(buffers[pos_in_index])
+	uniforms[1] = RDUniform.new()
+	uniforms[1].uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	uniforms[1].binding = 1
+	uniforms[1].add_id(buffers[vel_in_index])
+	
+	uniforms[3] = RDUniform.new()
+	uniforms[3].uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	uniforms[3].binding = 3
+	uniforms[3].add_id(buffers[pos_out_index])
+	uniforms[4] = RDUniform.new()
+	uniforms[4].uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	uniforms[4].binding = 4
+	uniforms[4].add_id(buffers[vel_out_index])
+	
+	# rebuild uniform set
+	uniform_set = rdmain.uniform_set_create(uniforms, shader, 0)
 
 # HANDLE MOUSE INPUTS
 var dragging := false

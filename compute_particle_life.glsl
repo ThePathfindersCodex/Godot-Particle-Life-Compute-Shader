@@ -244,17 +244,11 @@ void run_sim() {
     out_vel_buffer.data[id].v = vel;
 }
 
-void clear_texture() {
-    ivec2 pixel = ivec2(gl_GlobalInvocationID.xy);
-    imageStore(OUTPUT_TEXTURE, pixel, vec4(vec3(0.1),1.0)); // slight off-black	
-    //imageStore(OUTPUT_TEXTURE, pixel, vec4(0.0)); // transparent	
-}
-
 void draw_texture() {
     uint id = gl_GlobalInvocationID.x;
     if (id >= uint(params.point_count)) return;
 
-	vec2 curr_pos = out_pos_buffer.data[id].v;   // Current particles pos
+	vec2 curr_pos = in_pos_buffer.data[id].v;   // Current particles pos
 	vec2 image_size_vec = vec2(params.image_size,params.image_size);
     int species = in_species_buffer.data[id];
 	
@@ -281,10 +275,7 @@ void draw_texture() {
 
 void main() {
     if (params.run_mode == 0 && params.dt > 0.0) {
-		//if (params.dt == 0.0) return;
         run_sim();
-	} else if (params.run_mode == 1) {
-        clear_texture();
     } else if (params.run_mode == 2) {
         draw_texture();
     }
